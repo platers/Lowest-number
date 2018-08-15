@@ -11,7 +11,7 @@ export default {
     return Api().post('add_event', params)
   },
   getCurrentGame () {
-    return Api().get('currentGame')
+    return Api().post('currentGame')
   }
 
 }

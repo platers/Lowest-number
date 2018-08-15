@@ -38,10 +38,17 @@ export default {
       const response = await EventService.getGame({
         id: this.gameId
       })
+      this.debug = response
       this.events = response.data.events
       if (this.events.length >= this.entry_limit) {
         this.gameId += 1
       }
+      // this.$router.push({ name: 'Posts' })
+    },
+    async currentGame () {
+      const response = await EventService.getCurrentGame({})
+      this.debug = response.data
+      this.gameId = response.data.id
       // this.$router.push({ name: 'Posts' })
     },
     async addGuess () {
@@ -58,14 +65,6 @@ export default {
       //   'success'
       // )
       this.$router.push({ name: 'home' })
-    },
-    async currentGame () {
-      var buf = await EventService.getCurrentGame().data
-      if (buf) {
-        this.gameId = buf.id
-        this.debug = buf.id
-      }
-      // this.$router.push({ name: 'Posts' })
     }
   }
 }

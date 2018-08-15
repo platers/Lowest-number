@@ -2,10 +2,11 @@
   <div class="posts">
     <h1>Lowest number</h1>
     <p>Guess a positive integer. The person with the lowest unique number wins!</p>
+    <p>Next game has {{numSubmissions}}/{{entry_limit}} submissions</p>
     <div class="table">
       <table>
           <tr v-for="event in events" v-bind:key="event.id" v-bind:class="event.color ? 'white' : 'gray'">
-              
+              <td>{{event.game}}</td>
               <td>{{event.name}}</td>
               <td>{{event.number}}</td>
               <td v-if="event.winner">WINN</td>
@@ -21,7 +22,10 @@ export default {
   name: 'results',
   data () {
     return {
-      events: []
+      events: [],
+      debug: [],
+      entry_limit: 3,
+      numSubmissions: 0
     }
   },
   mounted () {
@@ -31,35 +35,37 @@ export default {
     async getEvents () {
       const response = await EventService.fetchEvents({})
       const events = response.data.events
+      this.debug = events
       var winners = {}
+      var count = {}
       for (var i = events.length - 1; i >= 0; i--) {
+        if (count[events[i].game]) count[events[i].game]++
+        else count[events[i].game] = 1
         if (i > 0 && events[i].number === events[i - 1].number && events[i].game === events[i - 1].game) {
           continue
         }
-        if (i < events.length && events[i].number === events[i + 1].number && events[i].game === events[i + 1].game) {
+        if (i < events.length - 1 && events[i].number === events[i + 1].number && events[i].game === events[i + 1].game) {
           continue
         }
         winners[events[i].game] = events[i].number
       }
+      this.numSubmissions = events.length % this.entry_limit
       for (var e of events) {
-        this.events.push(
-          {
-            name: e.name,
-            game: e.game,
-            number: e.number,
-            color: e.game % 2,
-            winner: winners[e.game] === e.number
-          }
-        )
+        console.log(count[e.game])
+        if (count[e.game] === this.entry_limit) {
+          this.events.push(
+            {
+              name: e.name,
+              game: e.game,
+              number: e.number,
+              color: e.game % 2,
+              winner: winners[e.game] === e.number
+            }
+          )
+        }
       }
       // this.$router.push({ name: 'Posts' })
-    },
-    async currentGame () {
-      const response = await EventService.getCurrentGame({})
-      return response
-      // this.$router.push({ name: 'Posts' })
     }
-
   }
 }
 </script>
