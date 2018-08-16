@@ -8,7 +8,9 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 app.disable('etag');
-
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('../../client/build'));
+}
 const mongodb_conn_module = require('./mongodbConnModule');
 var db = mongodb_conn_module.connect();
 
