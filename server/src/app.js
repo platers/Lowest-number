@@ -12,7 +12,6 @@ app.disable('etag');
 const mongodb_conn_module = require('./mongodbConnModule');
 var db = mongodb_conn_module.connect();
 
-var Post = require("../models/post");
 var Event = require("../models/event");
 
 app.get('/events', (req, res) => {

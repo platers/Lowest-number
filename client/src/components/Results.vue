@@ -5,11 +5,16 @@
     <p>Next game has {{numSubmissions}}/{{entry_limit}} submissions</p>
     <div class="table">
       <table>
+          <tr>
+            <td>Game</td>
+            <td>Name</td>
+            <td>Guess</td>
+          </tr>
           <tr v-for="event in events" v-bind:key="event.id" v-bind:class="event.color ? 'white' : 'gray'">
-              <td>{{event.game}}</td>
-              <td>{{event.name}}</td>
-              <td>{{event.number}}</td>
-              <td v-if="event.winner">WINN</td>
+            <td>{{event.game}}</td>
+            <td>{{event.name}}</td>
+            <td>{{event.number}}</td>
+            <td v-if="event.winner"><img src="https://freeiconshop.com/wp-content/uploads/edd/star-curved-outline.png" width="13px"></td>
           </tr>
       </table>
     </div>
@@ -70,15 +75,15 @@ export default {
 }
 </script>
 <style type="text/css">
-.form input, .form textarea {
-  width: 500px;
-  padding: 10px;
-  border: 1px solid #e0dede;
-  outline: none;
-  font-size: 12px;
-}
 table {
-
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 0;
+}
+td, th {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .table {
   margin: 0 auto;
