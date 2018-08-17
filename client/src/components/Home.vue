@@ -5,6 +5,7 @@
       <router-link v-bind:to="{ name: 'results' }" class="">Results</router-link>
     </div>
     <p>Guess a positive integer. The person with the lowest unique number wins!</p>
+    <p>The round ends after {{entry_limit}} submissions</p>
       <div class="form">
         <p v-if="errors.length">
           <b>Please correct the following error(s):</b>
