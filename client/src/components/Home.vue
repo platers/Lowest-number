@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       name: '',
-      number: 0,
+      number: '',
       entry_limit: 3,
       gameId: 0,
       events: [],

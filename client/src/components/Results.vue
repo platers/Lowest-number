@@ -1,6 +1,9 @@
 <template>
   <div class="posts">
     <h1>Lowest number</h1>
+    <div>
+      <router-link v-bind:to="{ name: 'home' }" class="">Home</router-link>
+    </div>
     <p>Guess a positive integer. The person with the lowest unique number wins!</p>
     <p>Next game has {{numSubmissions}}/{{entry_limit}} submissions</p>
     <div class="table">
