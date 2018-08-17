@@ -6,11 +6,17 @@
     </div>
     <p>Guess a positive integer. The person with the lowest unique number wins!</p>
       <div class="form">
+        <p v-if="errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="error in errors" v-bind:key="error.id">{{ error }}</li>
+          </ul>
+        </p>
         <div>
           <input type="text" name="name" placeholder="Name" v-model="name">
         </div>
         <div>
-          <input type="text" name="number" placeholder="Number" v-model="number">
+          <input type="number" name="number" placeholder="Number" v-model="number" min="1" step="1">
         </div>
         <div>
           <button class="app_post_btn" @click="addGuess">Guess</button>
@@ -26,14 +32,34 @@ export default {
   data () {
     return {
       name: '',
-      number: '',
+      number: 0,
       entry_limit: 3,
       gameId: 0,
       events: [],
+      errors: [],
       debug: -1
     }
   },
   methods: {
+    checkForm () {
+      this.errors = []
+
+      if (!this.name) {
+        this.errors.push('Name required')
+      }
+      if (!this.number) {
+        this.errors.push('Number required')
+      }
+      if (this.number < 1) {
+        this.errors.push('Number must be at least 1')
+      }
+      if (this.number > 100000) {
+        this.errors.push('Number must be less than 100000')
+      }
+      if (this.number % 1 !== 0) {
+        this.errors.push('Number must be an integer')
+      }
+    },
     async getGame () {
       const response = await EventService.getGame({
         id: this.gameId
@@ -52,6 +78,15 @@ export default {
       // this.$router.push({ name: 'Posts' })
     },
     async addGuess () {
+      this.checkForm()
+      if (this.errors.length) {
+        this.$swal(
+          `Input was not valid`,
+          `Please fix the above errors`,
+          'error'
+        )
+        return
+      }
       await this.currentGame()
       await this.getGame()
       await EventService.addEvent({
@@ -59,11 +94,11 @@ export default {
         number: this.number,
         game: this.gameId
       })
-      // this.$swal(
-      //   'Great!',
-      //   `Your post has been updated!`,
-      //   'success'
-      // )
+      this.$swal(
+        'Great!',
+        `Your post has been updated!`,
+        'success'
+      )
       this.$router.push({ name: 'home' })
     }
   }
@@ -79,6 +114,10 @@ export default {
 }
 .form div {
   margin: 20px;
+}
+ul {
+  list-style: none;
+  padding: 0px;
 }
 .app_post_btn {
   background: #4d7ef7;
