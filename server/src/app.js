@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 app.use(cors())
 app.disable('etag');
 if (process.env.NODE_ENV === 'production') {
-	app.use('/dist', express.static("dist"));
+	app.use(express.static(__dirname + "/dist"));
 }
 const mongodb_conn_module = require('./mongodbConnModule');
 var db = mongodb_conn_module.connect();
