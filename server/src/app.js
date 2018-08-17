@@ -16,9 +16,9 @@ var db = mongodb_conn_module.connect();
 
 var Event = require("../models/event");
 
-// app.get('*', (request, response) => {
-// 	response.sendFile(path.join(__dirname, 'dist', 'index.html'));
-// });
+app.get('/', (request, response) => {
+	response.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 app.get('/events', (req, res) => {
 	// Event.remove({}, function(err) { 
