@@ -5,6 +5,7 @@
       <router-link v-bind:to="{ name: 'results' }" class="">Results</router-link>
     </div>
     <p>Guess a positive integer. The person with the lowest unique number wins!</p>
+    <p>Please do not submit more than once</p>
     <p>The round ends after {{entry_limit}} submissions</p>
       <div class="form">
         <p v-if="errors.length">
@@ -97,7 +98,7 @@ export default {
       })
       this.$swal(
         'Great!',
-        `Your post has been updated!`,
+        `Your guess has been recorded!`,
         'success'
       )
       this.$router.push({ name: 'home' })
