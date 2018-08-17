@@ -1,4 +1,11 @@
 module.exports = {
-  historyApiFallback: true,
-  NODE_ENV: '"production"'
+  NODE_ENV: '"production"',
+  historyApiFallback: {
+    rewrites: [
+      {
+        from: /.*/,
+        to:  'index.html'
+      }
+    ]
+  }
 }

@@ -3,7 +3,6 @@ var path = require('path')
 
 module.exports = {
   build: {
-    historyApiFallback: true,
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
@@ -23,7 +22,6 @@ module.exports = {
     bundleAnalyzerReport: process.env.npm_config_report
   },
   dev: {
-    historyApiFallback: true,
     env: require('./dev.env'),
     port: 8080,
     autoOpenBrowser: true,
