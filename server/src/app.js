@@ -8,9 +8,7 @@ const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
-app.use(history({
-	index: __dirname + "/dist/index.html"
-}))
+app.use(history())
 app.disable('etag')
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(__dirname + "/dist"));
